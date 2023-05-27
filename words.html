@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>English Words</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+  background-image: url("bgimg.png");
+  
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+    .words {
+  width: 200px;
+  height: 30px;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color:#5c2661;
+  color:#ffffff;
+  margin-right: 30px;
+  text-align: center;
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+.meanings {
+  width: 400px;
+  color: rgb(0, 0, 0);
+  height: 30px;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.my-div{
+  position: relative;
+  display: flex;
+      justify-content: center;
+      align-items: center;  
+  height: 100px;
+}
+
+.head {
+  font-size: 4rem;
+  font-family: 'Montserrat', sans-serif;
+  color: rgba(158, 37, 164, 0.732);
+  text-align: center;
+  padding-bottom: 10px;
+}
+.button{
+  margin-top: 5px;
+  width: 300px;
+}
+  </style>
+</head>
+<body>
+  <h2 class="head">Explore English Vocabulary with 5 Captivating Definitions</h2>
+  <button class="button" onclick="generateWords()">Generate Words</button>
+  
+  <div id="content">
+    <!-- Words and meanings will be dynamically inserted here -->
+  </div>
+
+  <script>
+    function generateWords() {
+        const apiKey = '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';
+      // Make a POST request to the OpenAI API
+      $.ajax({
+        url: 'https://api.openai.com/v1/engines/text-davinci-003/completions',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        method: 'POST',
+        data: JSON.stringify({
+          'prompt': 'Generate 5 random English words and their meanings in "word-meaning" format.',
+          max_tokens: 2048,
+        }),
+        success: function(data) {
+            const x = data.choices[0].text;
+            //const y=JSON.stringify(x);
+            // const x = y.replace(/^\n+/, '');
+            // container.innerHTML = JSON.stringify(x);
+            var pairs = x.replace(/^\n+/, "").split('\n');
+
+            // Iterate over the pairs and create a separate div for each
+            pairs.forEach(function(pair) {
+            // Create a new <div> element
+            var div = document.createElement('div');
+            
+            // Add a class to the div
+            div.classList.add('my-div');
+
+            // Split the pair into word and meaning
+            var parts = pair.split('-');
+            var word = parts[0];
+            var meaning = parts[1];
+            
+            if (word !== null && meaning !== undefined) {
+              // Create separate textboxes for word and meaning
+              var wordTextbox = document.createElement('input');
+              wordTextbox.type = 'text';
+              wordTextbox.value = word;
+              wordTextbox.classList.add('words'); // Add a CSS class for styling
+              
+              var meaningTextbox = document.createElement('input');
+              meaningTextbox.type = 'text';
+              meaningTextbox.value = meaning;
+              meaningTextbox.classList.add('meanings'); // Add a CSS class for styling
+              
+              // Append the textboxes to the div
+              div.appendChild(wordTextbox);
+              div.appendChild(meaningTextbox);
+              
+              // Append the div to the body of the HTML document
+              document.body.appendChild(div);
+              }
+            });
+           
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

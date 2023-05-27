@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Word Up</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#">Home</a>
+      <a href="meaning.html">Meaning Finder</a>
+      
+    </div>
+    
+    <div class="parent-container">
+      <div class="left-container">
+        <div class="row">
+          <div class="column"><h1 class="heading">Enhance Your Vocabulary: Learn New English Words and Meanings with Ease"</h1></div>
+          
+        </div>
+        <div class="row">
+          <div class="column"><p class="text">Our platform offers a wide range of interactive tools and resources to help you learn new words, understand their meanings, and use them confidently in your daily life. Join us now and take the first step towards mastering the English language!</p></div>
+        
+        </div>
+        <div class="row">
+          <div class="column"><button class="button"onclick="window.location.href='words.html'">Start Learning</button></div>
+         
+        </div>
+      </div>
+      <div class="right-container">
+        <div class="image-container">
+          <img src="LEARN.webp" alt="your-image" />
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    window.onload = function() {
+      var heading = document.querySelector('.heading');
+      heading.classList.add('active');
+    }
+  </script>
+</html>

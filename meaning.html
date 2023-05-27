@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meaning Finder</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+        }
+        .head {
+        font-size: 4rem;
+        font-family: 'Montserrat', sans-serif;
+        color: rgba(158, 37, 164, 0.732);
+        margin-top: 20px;
+        }
+        
+        .container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 10px;
+        }
+        
+        #wordInput {
+          width: 200px;
+          height: 40px;
+          text-align: center;
+          border: none;
+          border-radius: 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          margin-right: 10px;
+          margin-top: 20px;
+        }
+        .button{
+            margin-top: 20px;
+        }
+        
+        #meaningOutput {
+        background-color: rgb(73, 67, 74);
+        padding: 10px;
+        text-align: center;
+        color: white;
+        margin-top: 50px;
+    }
+
+    .div {
+      display: flex;
+      align-items: center;
+    }
+      </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function getWordMeaning() {
+      var word = document.getElementById('wordInput').value;
+      var chatGPTUrl = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
+      var apiKey = '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'; // Replace with your actual OpenAI API key
+
+      var data = {
+        prompt: "What is the meaning of " + word + "?",
+        max_tokens: 50,
+        temperature: 0.6
+      };
+
+      $.ajax({
+        url: chatGPTUrl,
+        type: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + apiKey,
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(data),
+        success: function (response) {
+          var meaning = response.choices[0].text.trim();
+          document.getElementById('meaningOutput').innerText = meaning;
+        },
+        error: function (error) {
+          console.error('Error:', error);
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1 class="head">Word Meaning Finder</h1>
+  <div class="div">
+    
+    <input type="text" id="wordInput" placeholder="Enter a word">
+    <button class="button" onclick="getWordMeaning()">Get Meaning</button>
+  </div>
+  
+  <p id="meaningOutput"></p>
+</body>
+</html>
