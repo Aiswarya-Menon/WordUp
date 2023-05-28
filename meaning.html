@@ -58,7 +58,7 @@
     function getWordMeaning() {
       var word = document.getElementById('wordInput').value;
       var chatGPTUrl = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
-      var apiKey = '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'; // Replace with your actual OpenAI API key
+      var apiKey = 'YOUR-API_KEY'; // Replace with your actual OpenAI API key
 
       var data = {
         prompt: "What is the meaning of " + word + "?",
